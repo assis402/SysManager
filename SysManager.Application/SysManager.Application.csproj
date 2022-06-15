@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Contracts\" />
+    <None Remove="Contracts\Users\" />
+    <None Remove="Contracts\Products\" />
+    <None Remove="Contracts\Users\Request\" />
+    <None Remove="Contracts\Users\Response\" />
+    <None Remove="Contracts\Products\Request\" />
+    <None Remove="Contracts\Products\Response\" />
+    <None Remove="Data\" />
+    <None Remove="Data\MySql\" />
+    <None Remove="Data\MySql\Entities\" />
+    <None Remove="Data\MySql\Repositories\" />
+    <None Remove="Errors\" />
+    <None Remove="Services\" />
+    <None Remove="Helpers\" />
+    <None Remove="Validators\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Contracts\" />
+    <Folder Include="Contracts\Users\" />
+    <Folder Include="Contracts\Products\" />
+    <Folder Include="Contracts\Users\Request\" />
+    <Folder Include="Contracts\Users\Response\" />
+    <Folder Include="Contracts\Products\Request\" />
+    <Folder Include="Contracts\Products\Response\" />
+    <Folder Include="Data\" />
+    <Folder Include="Data\MySql\" />
+    <Folder Include="Data\MySql\Entities\" />
+    <Folder Include="Data\MySql\Repositories\" />
+    <Folder Include="Errors\" />
+    <Folder Include="Services\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Validators\" />
+  </ItemGroup>
+</Project>

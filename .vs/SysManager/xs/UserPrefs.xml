@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{847473A9-D555-4DEE-AB93-810EE83B91DB}|Default">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.SysManager.Application PreferredExecutionTarget="MonoDevelop.Default" FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.SysManager.API.Admin PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument=".gitignore">
+    <Files>
+      <File FileName="SysManager.Admin/Program.cs" Line="14" Column="1" />
+      <File FileName=".gitignore" Line="133" Column="10" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SysManager" expanded="True" selected="True">
+            <Node name="SysManager.API.Admin" expanded="True" />
+            <Node name="SysManager.Application" expanded="True">
+              <Node name="Data" expanded="True">
+                <Node name="MySql" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+</Properties>
