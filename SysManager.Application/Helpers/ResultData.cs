@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SysManager.Application.Contracts
+namespace SysManager.Application.Helpers
 {
 	public class ResultData
 	{

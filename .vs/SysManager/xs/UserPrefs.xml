@@ -1,12 +1,20 @@
 ﻿<Properties StartupConfiguration="{847473A9-D555-4DEE-AB93-810EE83B91DB}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="SysManager.Admin/Controllers/AccountController.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.SysManager.Application PreferredExecutionTarget="MonoDevelop.Default" FirstBuild="True" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="SysManager.Application/Helpers/Utils.cs">
     <Files>
       <File FileName="SysManager.Admin/Program.cs" Line="14" Column="1" />
       <File FileName="CreateDatabase.sql" Line="37" Column="3" />
       <File FileName="SysManager.Application/Contracts/ResponseDefault.cs" Line="9" Column="43" />
       <File FileName="SysManager.Application/Contracts/Users/Request/UserPostRequest.cs" Line="13" Column="1" />
       <File FileName="SysManager.Application/Contracts/Products/Request/ProductPostRequest.cs" Line="15" Column="41" />
-      <File FileName="SysManager.Admin/Controllers/AccountController.cs" Line="5" Column="10" />
+      <File FileName="SysManager.Admin/Controllers/AccountController.cs" Line="18" Column="4" />
+      <File FileName="SysManager.Application/Helpers/Utils.cs" Line="7" Column="50" />
+      <File FileName="SysManager.Application/Helpers/ResultData.cs" Line="26" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -25,6 +33,9 @@
                   <Node name="Request" expanded="True" />
                 </Node>
               </Node>
+              <Node name="Helpers" expanded="True">
+                <Node name="Utils.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>
@@ -34,12 +45,6 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.SysManager.API.Admin PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.SysManager.Application FirstBuild="True" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.SysManager.API.Admin PreferredExecutionTarget="/Applications/Google Chrome.app" />
 </Properties>

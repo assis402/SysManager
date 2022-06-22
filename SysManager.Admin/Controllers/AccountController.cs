@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SysManager.Application.Contracts;
 using SysManager.Application.Contracts.Users.Request;
 using SysManager.Application.Helpers;
+using SysManager.Application.Services;
 
 namespace SysManager.API.Admin.Controllers
 {
@@ -10,15 +10,18 @@ namespace SysManager.API.Admin.Controllers
 	[Route("api/v{version:apiVersion}/[controller]")]
 	public class AccountController
 	{
-		public AccountController()
+		readonly UserService _service;
+
+		public AccountController(UserService service)
 		{
+			_service = service;
 		}
 
 		[HttpPost("account-create")]
-		public async Task<ResultData> Post(UserPostRequest request)
+		public async Task<IActionResult> Post(UserPostRequest request)
 		{
-			var response = Utils.SuccessData("Reposta do método", true);
-			return response;
+			var response = await _service.PostAsync();
+			return Utils.Convert(response);
 		}
 	}
 }

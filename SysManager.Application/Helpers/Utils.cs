@@ -1,4 +1,4 @@
-using SysManager.Application.Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SysManager.Application.Helpers
 {
@@ -9,6 +9,14 @@ namespace SysManager.Application.Helpers
             var result = new ResultData<T>(data);
             result.Success = success;
             return result;
+        }
+
+        public static IActionResult Convert(ResultData resultData) 
+        {
+            if (resultData.Success)
+                return new OkObjectResult(resultData);
+
+            else return new BadRequestObjectResult(resultData);
         }
     }
 }
