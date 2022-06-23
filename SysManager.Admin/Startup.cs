@@ -9,7 +9,6 @@ namespace SysManager.Admin
     {
         public void BeforeConfigureServices(IServiceCollection services)
         {
-
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -17,6 +16,8 @@ namespace SysManager.Admin
             BeforeConfigureServices(services);
             services.AddApiVersioning();
             services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddScoped<UserService>();
+            services.AddScoped<UserRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
