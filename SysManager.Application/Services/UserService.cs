@@ -19,21 +19,28 @@ namespace SysManager.Application.Services
 
         public async Task<ResultData> PostAsync(UserPostRequest request)
         {
-            var errors = new List<string>();
+            try
+            {
+                var errors = new List<string>();
 
-            if (request.Email == "" || request.Email == null)
-                errors.Add("Precisa informar a propriedade (Email)");
-            if (request.UserName == "" || request.UserName == null)
-                errors.Add("Precisa informar a propriedade (UserName)");
-            if (request.Password == "" || request.Password == null)
-                errors.Add("Precisa informar a propriedade (Password)");
+                if (request.Email == "" || request.Email == null)
+                    errors.Add("Precisa informar a propriedade (Email)");
+                if (request.UserName == "" || request.UserName == null)
+                    errors.Add("Precisa informar a propriedade (UserName)");
+                if (request.Password == "" || request.Password == null)
+                    errors.Add("Precisa informar a propriedade (Password)");
+                
+                if (errors.Count > 0)
+                    return Utils.ErrorData(errors);
 
-            if (errors.Count > 0)
-                return Utils.ErrorData(errors);
+                var entity = new UserEntity(request);
 
-            var entity = new UserEntity(request);
-
-            return Utils.SuccessData(await _userRepository.CreatAsync(entity));
+                return Utils.SuccessData(await _userRepository.CreateAsync(entity));
+            }
+            catch (Exception ex)
+            {
+                return Utils.ErrorData(false);
+            }
         }
     }
 }

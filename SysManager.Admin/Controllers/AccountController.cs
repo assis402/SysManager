@@ -18,9 +18,9 @@ namespace SysManager.API.Admin.Controllers
 		}
 
 		[HttpPost("account-create")]
-		public async Task<IActionResult> Post(UserPostRequest request)
+		public async Task<IActionResult> Post([FromBody] UserPostRequest request)
 		{
-			var response = await _service.PostAsync();
+			var response = await _service.PostAsync(request);
 			return Utils.Convert(response);
 		}
 	}

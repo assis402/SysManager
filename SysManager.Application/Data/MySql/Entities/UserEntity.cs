@@ -10,6 +10,10 @@ namespace SysManager.Application.Data.MySql.Entities
     [Table("user")]
     public class UserEntity
     {
+        public UserEntity()
+        {
+        }
+
         public UserEntity(UserPostRequest user)
         {
             this.Id = Guid.NewGuid();
@@ -18,6 +22,7 @@ namespace SysManager.Application.Data.MySql.Entities
             this.Password = user.Password;
             this.Active = false;
         }
+
         [Key,DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("id")]
         public Guid Id { get; set; }
