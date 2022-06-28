@@ -31,12 +31,56 @@ namespace SysManager.Application.Data.MySql.Repositories
                                    active = entity.Active
                                   };
 
-                var reuslt = await context.ExecuteAsync(query, mapper);
-                if (reuslt > 0)
+                var result = await context.ExecuteAsync(query, mapper);
+                if (result > 0)
                     return new ResponseDefault(entity.Id.ToString(), "Usuário criado com sucesso", false);
             }
 
             return new ResponseDefault("", "Erro ao criar usuário", true);
+        }
+
+        public async Task<ResponseDefault> RecoveryAsync(Guid id, string newPasword)
+        {
+            var query = $"update user set password = '{newPasword}' where id = '{id}'";
+
+            using (var context = _context.Connection())
+            {
+                var result = await context.ExecuteAsync(query);
+                if (result > 0)
+                    return new ResponseDefault(id.ToString(), "Usuário criado com sucesso", false);
+            }
+
+            return new ResponseDefault("", "Erro ao criar usuário", true);
+        }
+
+        public async Task<UserEntity> GetUserByEmailAsync(string email)
+        {
+            var query = $"select id, username, email, password, active from user where email = '{email}' limit 1";
+            using (var context = _context.Connection())
+            {
+                var result = await context.QueryFirstOrDefaultAsync(query);
+                return result;
+            }
+        }
+
+        public async Task<UserEntity> GetUserByUserNameAndEmailAsync(string userName, string email)
+        {
+            var query = $"select id, username, email, password, active from user where username = '{userName}' and email = '{email}' limit 1";
+            using (var context = _context.Connection())
+            {
+                var result = await context.QueryFirstOrDefaultAsync(query);
+                return result;
+            }
+        }
+
+        public async Task<UserEntity> GetUserByUserNameAndPasswordAsync(string username, string password)
+        {
+            var query = $"select id, username, email, password, active, from user where username = '{username}' and password = '{password}' limit 1";
+            using (var context = _context.Connection())
+            {
+                var result = await context.QueryFirstOrDefaultAsync(query);
+                return result;
+            }
         }
     }
 }

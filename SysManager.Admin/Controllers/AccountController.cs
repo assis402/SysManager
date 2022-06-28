@@ -17,10 +17,17 @@ namespace SysManager.API.Admin.Controllers
 			_service = service;
 		}
 
-		[HttpPost("account-create")]
+		[HttpPost("create-account")]
 		public async Task<IActionResult> Post([FromBody] UserPostRequest request)
 		{
 			var response = await _service.PostAsync(request);
+			return Utils.Convert(response);
+		}
+
+		[HttpPost("recovery-account")]
+		public async Task<IActionResult> Put([FromBody] UserPutRequest request)
+		{
+			var response = await _service.PutAsync(request);
 			return Utils.Convert(response);
 		}
 	}
