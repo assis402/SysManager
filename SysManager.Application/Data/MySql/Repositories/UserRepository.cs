@@ -3,6 +3,7 @@ using SysManager.Application.Contracts;
 using SysManager.Application.Data.MySql.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -58,7 +59,7 @@ namespace SysManager.Application.Data.MySql.Repositories
             var query = $"select id, username, email, password, active from user where email = '{email}' limit 1";
             using (var context = _context.Connection())
             {
-                var result = await context.QueryFirstOrDefaultAsync(query);
+                var result = await context.QueryFirstOrDefaultAsync<UserEntity>(query);
                 return result;
             }
         }

@@ -2,6 +2,7 @@ using SysManager.Application.Contracts.Users.Request;
 using SysManager.Application.Data.MySql.Entities;
 using SysManager.Application.Data.MySql.Repositories;
 using SysManager.Application.Helpers;
+using SysManager.Application.Validators.User.Request;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,21 +24,14 @@ namespace SysManager.Application.Services
             {
                 var errors = new List<string>();
 
-                if (request.Email == "" || request.Email == null)
-                    errors.Add("Precisa informar a propriedade (Email)");
-                if (request.UserName == "" || request.UserName == null)
-                    errors.Add("Precisa informar a propriedade (UserName)");
-                if (request.Password == "" || request.Password == null)
-                    errors.Add("Precisa informar a propriedade (Password)");
+                var validator = new UserPostRequestValidator(_userRepository);
+                var validationResult = validator.Validate(request);
+
+                if(!validationResult.IsValid)
+                    return Utils.ErrorData(validationResult.Errors.ToErrorCodeList());
                 
                 var userExists = await _userRepository.GetUserByEmailAsync(request.Email);
-
-                if (userExists != null)
-                    errors.Add($"Já existe um usuário com esse e-mail: {request.Email}"); 
-
-                if (errors.Count > 0)
-                    return Utils.ErrorData(errors);
-
+                
                 var entity = new UserEntity(request);
 
                 return Utils.SuccessData(await _userRepository.CreateAsync(entity));
@@ -54,12 +48,7 @@ namespace SysManager.Application.Services
             {
                 var errors = new List<string>();
 
-                if (request.Email == "" || request.Email == null)
-                    errors.Add("Precisa informar a propriedade (Email)");
-                if (request.UserName == "" || request.UserName == null)
-                    errors.Add("Precisa informar a propriedade (UserName)");
-                if (request.NewPassword == "" || request.NewPassword == null)
-                    errors.Add("Precisa informar a propriedade (NewPassword)");
+                
                 
                 var userExists = await _userRepository.GetUserByUserNameAndEmailAsync(request.UserName, request.Email);
 

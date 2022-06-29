@@ -12,5 +12,8 @@ namespace SysManager.Application.Erros
 
         [Description("É ncessário informar a propriedade Password")]
         User_Post_BadRequest_Password_Cannot_Be_Null_Or_Empty,
+        
+        [Description("Já existe um usuário com esse e-mail")]
+        User_Post_BadRequest_Email_Cannot_Be_Duplicated,
     }
 }
