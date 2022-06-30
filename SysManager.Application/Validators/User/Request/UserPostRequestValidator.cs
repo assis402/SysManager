@@ -23,12 +23,12 @@ namespace SysManager.Application.Validators.User.Request
                 .Must(password => !string.IsNullOrEmpty(password))
                 .WithMessage(SysManagerErrors.User_Post_BadRequest_Password_Cannot_Be_Null_Or_Empty.Description());
 
-            RuleFor(user => user)
-                .Must(user => {
-                    var result = repository.GetUserByUserNameOrEmailAsync(user.UserName, user.Email).Result;
+            RuleFor(x => x.Email)
+                .Must(email => {
+                    var result = repository.GetUserByEmailAsync(email).Result;
                     return result == null;
                 })
-                .WithMessage(SysManagerErrors.User_Post_BadRequest_Email_Or_UserName_Cannot_Be_Duplicated.Description());
+                .WithMessage(SysManagerErrors.User_Post_BadRequest_Email_Cannot_Be_Duplicated.Description());
         }
     }
 }

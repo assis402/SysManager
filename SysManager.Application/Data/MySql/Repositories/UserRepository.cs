@@ -59,14 +59,14 @@ namespace SysManager.Application.Data.MySql.Repositories
             var query = $"select id, username, email, password, active from user where email = '{email}' limit 1";
             using (var context = _context.Connection())
             {
-                var result = await context.QueryFirstOrDefaultAsync(query);
+                var result = await context.QueryFirstOrDefaultAsync<UserEntity>(query);
                 return result;
             }
         }
 
-        public async Task<UserEntity> GetUserByUserNameOrEmailAsync(string userName, string email)
+        public async Task<UserEntity> GetUserByUserNameAndEmailAsync(string userName, string email)
         {
-            var query = $"select id, username, email, password, active from user where username = '{userName}' or email = '{email}' limit 1";
+            var query = $"select id, username, email, password, active from user where username = '{userName}' and email = '{email}' limit 1";
             using (var context = _context.Connection())
             {
                 var result = await context.QueryFirstOrDefaultAsync<UserEntity>(query);

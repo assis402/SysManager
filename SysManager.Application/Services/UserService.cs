@@ -47,7 +47,7 @@ namespace SysManager.Application.Services
             {
                 var errors = new List<string>();
                 
-                var userExists = await _userRepository.GetUserByUserNameOrEmailAsync(request.UserName, request.Email);
+                var userExists = await _userRepository.GetUserByUserNameAndEmailAsync(request.UserName, request.Email);
 
                 if (userExists == null)
                     errors.Add($"Usuário não pertence a esse e-mail: {request.Email}"); 
