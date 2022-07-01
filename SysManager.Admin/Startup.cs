@@ -1,10 +1,12 @@
 using System;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SysManager.Application.Data.MySql;
 using SysManager.Application.Data.MySql.Repositories;
+using SysManager.Application.Helpers;
 using SysManager.Application.Services;
 
 namespace SysManager.Admin
@@ -25,6 +27,8 @@ namespace SysManager.Admin
         {
             Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
+            services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
             BeforeConfigureServices(services);
             services.AddApiVersioning();
             services.AddMvc(options => options.EnableEndpointRouting = false);
@@ -37,6 +41,8 @@ namespace SysManager.Admin
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseMvc();
         }
     }

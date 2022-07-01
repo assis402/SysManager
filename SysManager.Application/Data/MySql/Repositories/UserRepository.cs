@@ -74,12 +74,12 @@ namespace SysManager.Application.Data.MySql.Repositories
             }
         }
 
-        public async Task<UserEntity> GetUserByUserNameAndPasswordAsync(string username, string password)
+        public async Task<UserEntity> GetUserByCredentialsAsync(string email, string password)
         {
-            var query = $"select id, username, email, password, active, from user where username = '{username}' and password = '{password}' limit 1";
+            var query = $"select id, username, email, password, active from user where email = '{email}' and password = '{password}' limit 1";
             using (var context = _context.Connection())
             {
-                var result = await context.QueryFirstOrDefaultAsync(query);
+                var result = await context.QueryFirstOrDefaultAsync<UserEntity>(query);
                 return result;
             }
         }

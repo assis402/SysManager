@@ -15,5 +15,11 @@ namespace SysManager.Application.Erros
         
         [Description("Já existe um usuário com esse e-mail")]
         User_Post_BadRequest_Email_Cannot_Be_Duplicated,
+
+        [Description("Usuário ou email inválido")]
+        User_Put_BadRequest_UserName_Or_Email_Is_Invalid,
+
+        [Description("É ncessário informar a propriedade NewPassword")]
+        User_Put_BadRequest_NewPassword_Cannot_Be_Null_Or_Empty,
     }
 }

@@ -18,18 +18,49 @@ namespace SysManager.Application.Services
             this._userRepository = userRepository;
         }
 
+        public async Task<ResultData> PostLoginAsync(UserPostLoginRequest request)
+        {
+            try
+            {
+                var openData = request.Email + ":" + request.Password + ":" + Utils.GetDateExpired(10);
+                var dataBytes = Utils.ToBase64Encode(openData);
+                var user = await _userRepository.GetUserByCredentialsAsync(request.Email, request.Password);
+
+                if (user != null)
+                {
+                    var response = new AccountResponse
+                    {
+                        Id = user.Id.ToString(),
+                        Message = "Token successful",
+                        Token = dataBytes
+                    };
+                    return Utils.SuccessData(response);
+                }
+                
+                return Utils.ErrorData(new AccountResponse { Message = "Token Fail" });
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
+        }
+
+        public async Task<UserEntity> Authenticate(string email, string password)
+        {
+            var userExists = await _userRepository.GetUserByCredentialsAsync(email, password);
+            return userExists;
+        }
+
         public async Task<ResultData> PostAsync(UserPostRequest request)
         {
             try
             {
-                var errors = new List<string>();
-
                 var validator = new UserPostRequestValidator(_userRepository);
                 var validationResult = validator.Validate(request);
 
                 if(!validationResult.IsValid)
                     return Utils.ErrorData(validationResult.Errors.ToErrorCodeList());
-
                 
                 var entity = new UserEntity(request);
 
@@ -45,17 +76,15 @@ namespace SysManager.Application.Services
         {
             try
             {
-                var errors = new List<string>();
-                
-                var userExists = await _userRepository.GetUserByUserNameAndEmailAsync(request.UserName, request.Email);
+                var validator = new UserPutRequestValidator(_userRepository);
+                var validationResult = validator.Validate(request);
 
-                if (userExists == null)
-                    errors.Add($"Usuário não pertence a esse e-mail: {request.Email}"); 
+                if(!validationResult.IsValid)
+                    return Utils.ErrorData(validationResult.Errors.ToErrorCodeList());
 
-                if (errors.Count > 0)
-                    return Utils.ErrorData(errors);
+                var user = await _userRepository.GetUserByUserNameAndEmailAsync(request.UserName, request.Email);
 
-                return Utils.SuccessData(await _userRepository.RecoveryAsync(userExists.Id, request.NewPassword));
+                return Utils.SuccessData(await _userRepository.RecoveryAsync(user.Id, request.NewPassword));
             }
             catch (Exception ex)
             {
