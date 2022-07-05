@@ -4,8 +4,6 @@ using SysManager.Application.Data.MySql.Repositories;
 using SysManager.Application.Helpers;
 using SysManager.Application.Validators.User.Request;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SysManager.Application.Services
@@ -34,6 +32,7 @@ namespace SysManager.Application.Services
                         Message = "Token successful",
                         Token = dataBytes
                     };
+                    
                     return Utils.SuccessData(response);
                 }
                 

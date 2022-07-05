@@ -2,7 +2,7 @@ using FluentValidation;
 using SysManager.Application.Contracts.Users.Request;
 using SysManager.Application.Data.MySql.Entities;
 using SysManager.Application.Data.MySql.Repositories;
-using SysManager.Application.Erros;
+using SysManager.Application.Errors;
 using SysManager.Application.Helpers;
 
 namespace SysManager.Application.Validators.User.Request
