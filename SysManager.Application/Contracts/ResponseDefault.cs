@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace SysManager.Application.Contracts
 {
 	public class ResponseDefault
 	{
-        public ResponseDefault(string id, string message, bool hasError)
+        public ResponseDefault(string message, bool hasError, string id = null)
         {
             Id = id;
             Message = message;

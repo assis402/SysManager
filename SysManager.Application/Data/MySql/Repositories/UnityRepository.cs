@@ -1,4 +1,3 @@
-using Dapper;
 using SysManager.Application.Contracts;
 using SysManager.Application.Contracts.Unity.Request;
 using SysManager.Application.Data.MySql.Entities;
@@ -8,77 +7,69 @@ using System.Threading.Tasks;
 
 namespace SysManager.Application.Data.MySql.Repositories
 {
-    public class UnityRepository
+    public class UnityRepository : BaseRepository
     {
-        private readonly MySqlContext _context;
-
-        public UnityRepository(MySqlContext context) => _context = context;
+        public UnityRepository(MySqlContext context) : base(context) { }
 
         public async Task<ResponseDefault> CreateAsync(UnityEntity entity)
         {
-            string query = $"INSERT INTO unity(id, name, active) VALUES('{entity.Id}', '{entity.Name}', {entity.Active})";
+            var query = @"INSERT INTO unity(id, name, active) VALUES(@Id, @Name, @Active)";
 
-            using var connection = _context.Connection();
-            var result = await connection.ExecuteAsync(query);
+            var param = new
+            {
+                entity.Id,
+                entity.Name,
+                entity.Active
+            };
 
-            if (result > 0)
-                return new ResponseDefault(entity.Id.ToString(), "Unidade de Medida criada com sucesso", false);
+            var result = await ExecuteAsync(query, param);
 
-            return new ResponseDefault("", "Erro ao tentar criar Unidade de Medida", true);
+            return result ? new ResponseDefault("Unidade de Medida criada com sucesso", false, entity.Id.ToString())
+                          : new ResponseDefault("Erro ao tentar criar Unidade de Medida", true);
         }
 
         public async Task<ResponseDefault> UpdateAsync(UnityEntity entity)
         {
-            string query = $"update unity set name = '{entity.Name}', active = {entity.Active} where id = '{entity.Id}'";
+            var query = $"UPDATE unity SET name = @Name, active = @Active WHERE id = @Id";
 
-            using (var connection = _context.Connection())
+            var param = new
             {
-                var result = await connection.ExecuteAsync(query);
+                entity.Id,
+                entity.Name,
+                entity.Active
+            };
 
-                if (result > 0)
-                    return new ResponseDefault(entity.Id.ToString(), "Unidade de Medida alterada com sucesso", false);
-            }
-            return new ResponseDefault("", "Erro ao tentar alterada Unidade de Medida", true);
+            var result = await ExecuteAsync(query, param);
+
+            return result ? new ResponseDefault("Unidade de Medida alterada com sucesso", false, entity.Id.ToString())
+                          : new ResponseDefault("Erro ao alterar Unidade de Medida", true);
         }
 
         public async Task<ResponseDefault> DeleteByIdAsync(Guid id)
         {
-            string strQuery = $"delete from unity where id = '{id}'";
+            var query = $"DELETE FROM unity WHERE id = '{id}'";
 
-            using (var cnx = _context.Connection())
-            {
-                var result = await cnx.ExecuteAsync(strQuery);
-                if (result > 0)
-                    return new ResponseDefault(id.ToString(), "Unidade de Medida excluída com sucesso", false);
-            }
-            return new ResponseDefault("", "Erro ao tentar excluír Unidade de Medida", true);
+            var result = await ExecuteAsync(query);
+
+            return result ? new ResponseDefault("Unidade de Medida excluída com sucesso", false, id.ToString())
+                          : new ResponseDefault("Erro ao excluir Unidade de Medida", true);
         }
 
         public async Task<UnityEntity> GetByIdAsync(Guid id)
         {
-            string query = $"select id, name, active from unity where id = '{id}'";
-
-            using (var cnx = _context.Connection())
-            {
-                var result = await cnx.QueryFirstOrDefaultAsync<UnityEntity>(query);
-                return result; 
-            }
+            var query = $"SELECT id, name, active FROM unity WHERE id = '{id}' AND active = true";
+            return await QueryFirstOrDefaultAsync<UnityEntity>(query);
         }
 
         public async Task<UnityEntity> GetUnityByNameAsync(string name)
         {
-            string query = $"select id, name, active from unity where name = '{name}' limit 1";
-
-            using (var connection = _context.Connection())
-            {
-                var result = await connection.QueryFirstOrDefaultAsync<UnityEntity>(query);
-                return result;
-            }
+            var query = $"SELECT id, name, active FROM unity WHERE name = '{name}' AND active = true LIMIT 1";
+            return await QueryFirstOrDefaultAsync<UnityEntity>(query);
         }
 
         public async Task<PaginationResponse<UnityEntity>> GetByFilterAsync(UnityGetByFilterRequest filter)
         {
-            var sql = new StringBuilder("select id, name, active from unity where 1=1");
+            var sql = new StringBuilder("SELECT id, name, active FROM unity WHERE 1=1");
             var where = new StringBuilder();
 
             if (!string.IsNullOrEmpty(filter.Name))
@@ -90,14 +81,11 @@ namespace SysManager.Application.Data.MySql.Repositories
             sql.Append(where);
             
             if (filter.Page > 0 && filter.PageSize > 0)
-                sql.Append($" limit {filter.PageSize * filter.Page - 1}, {filter.PageSize}");
+                sql.Append($" LIMIT {filter.PageSize * filter.Page - 1}, {filter.PageSize}");
 
-            using (var connection = _context.Connection())
-            {
-                var result = await connection.QueryAsync<UnityEntity>(sql.ToString());
+            var result = await QueryAsync<UnityEntity>(sql.ToString());
 
-                return new PaginationResponse<UnityEntity>(filter.PageSize, filter.Page, result);
-            }
+            return new PaginationResponse<UnityEntity>(filter.PageSize, filter.Page, result);
         }
     }
 }

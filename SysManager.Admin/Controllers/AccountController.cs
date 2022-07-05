@@ -12,30 +12,15 @@ namespace SysManager.API.Admin.Controllers
 	{
 		readonly UserService _service;
 
-		public AccountController(UserService service)
-		{
-			_service = service;
-		}
+        public AccountController(UserService service) => _service = service;
 
-		[HttpPost("login")]
-		public async Task<IActionResult> Login([FromBody] UserPostLoginRequest request)
-		{
-			var response = await _service.PostLoginAsync(request);
-			return Utils.Convert(response);
-		}
+        [HttpPost("login")]
+		public async Task<IActionResult> Login([FromBody] UserPostLoginRequest request) => (await _service.PostLoginAsync(request)).Convert();
 
 		[HttpPost("create-account")]
-		public async Task<IActionResult> Post([FromBody] UserPostRequest request)
-		{
-			var response = await _service.PostAsync(request);
-			return Utils.Convert(response);
-		}
+		public async Task<IActionResult> Post([FromBody] UserPostRequest request) => (await _service.PostAsync(request)).Convert();
 
 		[HttpPut("recovery-account")]
-		public async Task<IActionResult> Put([FromBody] UserPutRequest request)
-		{
-			var response = await _service.PutAsync(request);
-			return Utils.Convert(response);
-		}
+		public async Task<IActionResult> Put([FromBody] UserPutRequest request) => (await _service.PutAsync(request)).Convert();
 	}
 }

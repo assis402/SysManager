@@ -11,19 +11,21 @@ namespace SysManager.Application.Helpers
     {
         public static ResultData<T> SuccessData<T>(T data)
         {
-            var result = new ResultData<T>(data);
-            result.Success = true;
-            return result;
+            return new ResultData<T>(data)
+            {
+                Success = true
+            };
         }
 
         public static ResultData<T> ErrorData<T>(T data)
         {
-            var result = new ResultData<T>(data);
-            result.Success = false;
-            return result;
+            return new ResultData<T>(data)
+            {
+                Success = false
+            };
         }
 
-        public static IActionResult Convert(ResultData resultData) 
+        public static IActionResult Convert(this ResultData resultData) 
         {
             if (resultData.Success)
                 return new OkObjectResult(resultData);
@@ -38,29 +40,21 @@ namespace SysManager.Application.Helpers
             var attributes = memInfo[0].GetCustomAttributes(typeof(T), false);
             return (attributes.Length > 0) ? (T)attributes[0] : null;
         }
-        
-        public static string Description(this Enum valorEnum)
-        {
-            return valorEnum.GetAttribute<DescriptionAttribute>().Description;
-        }
+
+        public static string Description(this Enum valorEnum) => valorEnum.GetAttribute<DescriptionAttribute>().Description;
 
         public static List<string> ToErrorCodeList(this IList<ValidationFailure> list)
         {
-            var _result = new List<string>();
+            var result = new List<string>();
+
             foreach (var item in list)
-                _result.Add(item.ErrorMessage);
-            return _result;
+                result.Add(item.ErrorMessage);
+
+            return result;
         }
 
-        public static string GetDateExpired(int value)
-        {
-            var date = DateTime.Now.AddMinutes(value);
-            return date.ToString("yyyyMMddHHmmss");
-        }
+        public static string GetDateExpired(int value) => DateTime.Now.AddMinutes(value).ToString("yyyyMMddHHmmss");
 
-        public static string ToBase64Encode(this string data)
-        {
-            return System.Convert.ToBase64String(Encoding.UTF8.GetBytes(data));
-        }
+        public static string ToBase64Encode(this string data) => System.Convert.ToBase64String(Encoding.UTF8.GetBytes(data));
     }
 }

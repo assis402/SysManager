@@ -11,10 +11,8 @@ namespace SysManager.Application.Services
     public class UserService
     {
         private readonly UserRepository _userRepository;
-        public UserService(UserRepository userRepository)
-        {
-            this._userRepository = userRepository;
-        }
+
+        public UserService(UserRepository userRepository) => _userRepository = userRepository;
 
         public async Task<ResultData> PostLoginAsync(UserPostLoginRequest request)
         {
@@ -40,16 +38,11 @@ namespace SysManager.Application.Services
             }
             catch (Exception ex)
             {
-                
-                throw;
+                return Utils.ErrorData(new { ex.Message });
             }
         }
 
-        public async Task<UserEntity> Authenticate(string email, string password)
-        {
-            var userExists = await _userRepository.GetUserByCredentialsAsync(email, password);
-            return userExists;
-        }
+        public async Task<UserEntity> Authenticate(string email, string password) => await _userRepository.GetUserByCredentialsAsync(email, password);
 
         public async Task<ResultData> PostAsync(UserPostRequest request)
         {
@@ -67,7 +60,7 @@ namespace SysManager.Application.Services
             }
             catch (Exception ex)
             {
-                return Utils.ErrorData(false);
+                return Utils.ErrorData(new { ex.Message });
             }
         }
 
@@ -87,7 +80,7 @@ namespace SysManager.Application.Services
             }
             catch (Exception ex)
             {
-                return Utils.ErrorData(false);
+                return Utils.ErrorData(new { ex.Message });
             }
         }
     }
