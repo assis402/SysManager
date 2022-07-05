@@ -18,15 +18,10 @@ namespace SysManager.Application.Helpers
     {
         private readonly UserService _userService;
         public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options,
-            ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, UserService userService) : base(options, logger, encoder, clock)
-        {
-            this._userService = userService;
-        }
-
+            ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, UserService userService) : base(options, logger, encoder, clock) => this._userService = userService;
 
         private bool ExpiredToken(string data)
         {
-
             if (data.Length < 14)
                 return true;
 
@@ -56,6 +51,7 @@ namespace SysManager.Application.Helpers
                 return AuthenticateResult.Fail("Missing Authorization Header");
 
             var user = new UserEntity();
+            
             try
             {
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
