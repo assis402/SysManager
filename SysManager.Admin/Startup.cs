@@ -36,8 +36,19 @@ namespace SysManager.Admin
             {
                 options.JsonSerializerOptions.IgnoreNullValues = true;
             });
+            
             services.AddScoped<UserService>();
+            services.AddScoped<CategoryService>();
+            services.AddScoped<ProductService>();
+            services.AddScoped<ProductTypeService>();
+            services.AddScoped<UnityService>();
+
             services.AddScoped<UserRepository>();
+            services.AddScoped<CategoryRepository>();
+            services.AddScoped<ProductRepository>();
+            services.AddScoped<ProductTypeRepository>();
+            services.AddScoped<UnityRepository>();
+            
             services.AddScoped<MySqlContext>();
             services.Configure<AppConnectionSettings>(option => Configuration.GetSection("ConnectionStrings").Bind(option));
         }

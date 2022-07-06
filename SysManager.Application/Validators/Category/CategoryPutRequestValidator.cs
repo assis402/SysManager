@@ -1,22 +1,22 @@
 ﻿using FluentValidation;
-using SysManager.Application.Contracts.Unity.Request;
+using SysManager.Application.Contracts.Category.Request;
 using SysManager.Application.Data.MySql.Repositories;
 using SysManager.Application.Errors;
 using SysManager.Application.Helpers;
 
-namespace SysManager.Application.Validators.Unity
+namespace SysManager.Application.Validators.Category
 {
-    public class UnityPutRequestValidator : AbstractValidator<UnityPutRequest>
+    public class CategoryPutRequestValidator : AbstractValidator<CategoryPutRequest>
     {
-        public UnityPutRequestValidator(UnityRepository repository)
+        public CategoryPutRequestValidator(CategoryRepository repository)
         {
             RuleFor(contract => contract.Name)
                 .Must(name => !string.IsNullOrEmpty(name))
-                .WithMessage(SysManagerErrors.Unity_Put_BadRequest_Name_Cannot_Be_Null_Or_Empty.Description());
+                .WithMessage(SysManagerErrors.Category_Put_BadRequest_Name_Cannot_Be_Null_Or_Empty.Description());
 
             RuleFor(contract => contract.Active)
                 .Must(active => active == true || active == false)
-                .WithMessage(SysManagerErrors.Unity_Put_BadRequest_Name_Cannot_Be_Null_Or_Empty.Description());
+                .WithMessage(SysManagerErrors.Category_Put_BadRequest_Name_Cannot_Be_Null_Or_Empty.Description());
 
             RuleFor(contract => contract)
                 .Must(x =>
@@ -29,7 +29,7 @@ namespace SysManager.Application.Validators.Unity
 
                     return true;
                 })
-                .WithMessage(SysManagerErrors.Unity_Put_BadRequest_Name_Cannot_Be_Duplicated.Description());
+                .WithMessage(SysManagerErrors.Category_Put_BadRequest_Name_Cannot_Be_Duplicated.Description());
         }
     }
 }

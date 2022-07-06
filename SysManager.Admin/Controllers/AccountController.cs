@@ -17,7 +17,7 @@ namespace SysManager.API.Admin.Controllers
         [HttpPost("login")]
 		public async Task<IActionResult> Login([FromBody] UserPostLoginRequest request) => (await _service.PostLoginAsync(request)).Convert();
 
-		[HttpPost("create-account")]
+		[HttpPost()]
 		public async Task<IActionResult> Post([FromBody] UserPostRequest request) => (await _service.PostAsync(request)).Convert();
 
 		[HttpPut("recovery-account")]

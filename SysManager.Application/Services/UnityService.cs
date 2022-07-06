@@ -17,10 +17,7 @@ namespace SysManager.Application.Services
     {
         private readonly UnityRepository _unityRepository;
 
-        public UnityService(UnityRepository repository)
-        {
-            this._unityRepository = repository;
-        }
+        public UnityService(UnityRepository repository) => this._unityRepository = repository;
 
         public async Task<ResultData> PostAsync(UnityPostRequest unity)
         {
@@ -43,7 +40,7 @@ namespace SysManager.Application.Services
                 return Utils.ErrorData(validationResult.Errors.ToErrorCodeList());
 
             var entity = new UnityEntity(unity);
-            return Utils.SuccessData(await _unityRepository.CreateAsync(entity));
+            return Utils.SuccessData(await _unityRepository.UpdateAsync(entity));
         }
 
         public async Task<ResultData> GetByFilterAsync(UnityGetByFilterRequest unity)
@@ -52,7 +49,7 @@ namespace SysManager.Application.Services
             return Utils.SuccessData(response);
         }
 
-        public async Task<ResultData> GetAsync(Guid id)
+        public async Task<ResultData> GetByIdAsync(Guid id)
         {
             var response = await _unityRepository.GetByIdAsync(id);
             if (response == null)
@@ -61,7 +58,7 @@ namespace SysManager.Application.Services
             return Utils.SuccessData(response);
         }
 
-        public async Task<ResultData> DeleteAsync(Guid id)
+        public async Task<ResultData> DeleteByIdAsync(Guid id)
         {
             var exists = await _unityRepository.GetByIdAsync(id);
             if (exists == null)
@@ -70,6 +67,5 @@ namespace SysManager.Application.Services
             var response = await _unityRepository.DeleteByIdAsync(id);
             return Utils.SuccessData(response);
         }
-
     }
 }

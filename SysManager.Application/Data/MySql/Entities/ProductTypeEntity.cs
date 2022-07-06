@@ -1,28 +1,28 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SysManager.Application.Contracts.Category.Request;
+using SysManager.Application.Contracts.ProductType.Request;
 
 namespace SysManager.Application.Data.MySql.Entities
 {
-    [Table("category")]
-    public class CategoryEntity
+    [Table("productType")]
+    public class ProductTypeEntity
     {
-        public CategoryEntity(CategoryPostRequest request)
+        public ProductTypeEntity(ProductTypePostRequest request)
         {
             Id = Guid.NewGuid();
             Name = request.Name;
             Active = request.Active;
         }
 
-        public CategoryEntity(CategoryPutRequest request)
+        public ProductTypeEntity(ProductTypePutRequest request)
         {
             Id = request.Id;
             Name = request.Name;
             Active = request.Active;
         }
 
-        public CategoryEntity()
+        public ProductTypeEntity()
         {
         }
 

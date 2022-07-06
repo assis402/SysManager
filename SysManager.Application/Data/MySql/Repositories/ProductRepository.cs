@@ -1,5 +1,5 @@
 using SysManager.Application.Contracts;
-using SysManager.Application.Contracts.Unity.Request;
+using SysManager.Application.Contracts.Product.Request;
 using SysManager.Application.Data.MySql.Entities;
 using System;
 using System.Text;
@@ -78,7 +78,7 @@ namespace SysManager.Application.Data.MySql.Repositories
             return await QueryFirstOrDefaultAsync<ProductEntity>(query);
         }
 
-        public async Task<PaginationResponse<ProductEntity>> GetByFilterAsync(UnityGetByFilterRequest filter)
+        public async Task<PaginationResponse<ProductEntity>> GetByFilterAsync(ProductGetByFilterRequest filter)
         {
             var sql = new StringBuilder("SELECT * FROM product WHERE 1=1");
             var where = new StringBuilder();

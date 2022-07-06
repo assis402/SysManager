@@ -18,7 +18,7 @@ namespace SysManager.Application.Services
         {
             try
             {
-                var openData = request.Email + ":" + request.Password + ":" + Utils.GetDateExpired(10);
+                var openData = request.Email + ":" + request.Password + ":" + Utils.GetDateExpired(30);
                 var dataBytes = Utils.ToBase64Encode(openData);
                 var user = await _userRepository.GetUserByCredentialsAsync(request.Email, request.Password);
 

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace SysManager.Application.Contracts.Category.Request
+namespace SysManager.Application.Contracts.ProductType.Request
 {
-    public class CategoryPostRequest
+    public class ProductTypePostRequest
     {
         public string Name { get; set; }
         public bool Active { get; set; }

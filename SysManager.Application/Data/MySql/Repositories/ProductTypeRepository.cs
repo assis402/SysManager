@@ -1,5 +1,5 @@
 using SysManager.Application.Contracts;
-using SysManager.Application.Contracts.Category.Request;
+using SysManager.Application.Contracts.ProductType.Request;
 using SysManager.Application.Data.MySql.Entities;
 using System;
 using System.Text;
@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SysManager.Application.Data.MySql.Repositories
 {
-    public class CategoryRepository : BaseRepository
+    public class ProductTypeRepository : BaseRepository
     {
-        public CategoryRepository(MySqlContext context) : base(context) { }
+        public ProductTypeRepository(MySqlContext context) : base(context) { }
 
-        public async Task<ResponseDefault> CreateAsync(CategoryEntity entity)
+        public async Task<ResponseDefault> CreateAsync(ProductTypeEntity entity)
         {
             var query = @"INSERT INTO category(id, name, active) " + 
                         @"VALUES(@Id, @Name, @Active)";
@@ -24,7 +24,7 @@ namespace SysManager.Application.Data.MySql.Repositories
             //    entity.Name,
             //    entity.Active,
             //    entity.ProductTypeId,
-            //    entity.ProductCategoryId,
+            //    entity.ProductProductTypeId,
             //    entity.ProductUnityId,
             //    entity.CostPrice,
             //    entity.Price,
@@ -33,11 +33,11 @@ namespace SysManager.Application.Data.MySql.Repositories
 
             var result = await ExecuteAsync(query, entity);
 
-            return result ? new ResponseDefault("Categoria criado com sucesso", false, entity.Id.ToString())
-                          : new ResponseDefault("Erro ao tentar criar Categoria", true);
+            return result ? new ResponseDefault("Tipo de Produto criado com sucesso", false, entity.Id.ToString())
+                          : new ResponseDefault("Erro ao tentar criar Tipo de Produto", true);
         }
 
-        public async Task<ResponseDefault> UpdateAsync(CategoryEntity entity)
+        public async Task<ResponseDefault> UpdateAsync(ProductTypeEntity entity)
         {
             var query = $"UPDATE category " +
                         $"SET name = @Name, active = @Active " +
@@ -52,8 +52,8 @@ namespace SysManager.Application.Data.MySql.Repositories
 
             var result = await ExecuteAsync(query, entity);
 
-            return result ? new ResponseDefault("Categoria alterado com sucesso", false, entity.Id.ToString())
-                          : new ResponseDefault("Erro ao alterar Categoria", true);
+            return result ? new ResponseDefault("Tipo de Produto alterado com sucesso", false, entity.Id.ToString())
+                          : new ResponseDefault("Erro ao alterar Tipo de Produto", true);
         }
 
         public async Task<ResponseDefault> DeleteByIdAsync(Guid id)
@@ -62,23 +62,23 @@ namespace SysManager.Application.Data.MySql.Repositories
 
             var result = await ExecuteAsync(query);
 
-            return result ? new ResponseDefault("Categoria excluído com sucesso", false, id.ToString())
-                          : new ResponseDefault("Erro ao excluir Categoria", true);
+            return result ? new ResponseDefault("Tipo de Produto excluído com sucesso", false, id.ToString())
+                          : new ResponseDefault("Erro ao excluir Tipo de Produto", true);
         }
 
-        public async Task<CategoryEntity> GetByIdAsync(Guid id)
+        public async Task<ProductTypeEntity> GetByIdAsync(Guid id)
         {
             var query = $"SELECT * FROM category WHERE id = '{id}' AND active = true";
-            return await QueryFirstOrDefaultAsync<CategoryEntity>(query);
+            return await QueryFirstOrDefaultAsync<ProductTypeEntity>(query);
         }
 
-        public async Task<CategoryEntity> GetByNameAsync(string name)
+        public async Task<ProductTypeEntity> GetByNameAsync(string name)
         {
             var query = $"SELECT * FROM category WHERE name = '{name}' AND active = true LIMIT 1";
-            return await QueryFirstOrDefaultAsync<CategoryEntity>(query);
+            return await QueryFirstOrDefaultAsync<ProductTypeEntity>(query);
         }
 
-        public async Task<PaginationResponse<CategoryEntity>> GetByFilterAsync(CategoryGetByFilterRequest filter)
+        public async Task<PaginationResponse<ProductTypeEntity>> GetByFilterAsync(ProductTypeGetByFilterRequest filter)
         {
             var sql = new StringBuilder("SELECT * FROM category WHERE 1=1");
             var where = new StringBuilder();
@@ -94,9 +94,9 @@ namespace SysManager.Application.Data.MySql.Repositories
             if (filter.Page > 0 && filter.PageSize > 0)
                 sql.Append($" LIMIT {filter.PageSize * filter.Page - 1}, {filter.PageSize}");
 
-            var result = await QueryAsync<CategoryEntity>(sql.ToString());
+            var result = await QueryAsync<ProductTypeEntity>(sql.ToString());
 
-            return new PaginationResponse<CategoryEntity>(filter.PageSize, filter.Page, result);
+            return new PaginationResponse<ProductTypeEntity>(filter.PageSize, filter.Page, result);
         }
     }
 }

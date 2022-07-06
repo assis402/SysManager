@@ -61,7 +61,7 @@ namespace SysManager.Application.Data.MySql.Repositories
             return await QueryFirstOrDefaultAsync<UnityEntity>(query);
         }
 
-        public async Task<UnityEntity> GetUnityByNameAsync(string name)
+        public async Task<UnityEntity> GetByNameAsync(string name)
         {
             var query = $"SELECT id, name, active FROM unity WHERE name = '{name}' AND active = true LIMIT 1";
             return await QueryFirstOrDefaultAsync<UnityEntity>(query);
