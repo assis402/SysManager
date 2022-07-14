@@ -1,10 +1,7 @@
-﻿using System;
-using System.Text.Json.Serialization;
-
-namespace SysManager.Application.Contracts
+﻿namespace SysManager.Application.Contracts
 {
-	public class ResponseDefault
-	{
+    public class ResponseDefault
+    {
         public ResponseDefault(string message, bool hasError, string id = null)
         {
             Id = id;
@@ -17,4 +14,3 @@ namespace SysManager.Application.Contracts
         public bool HasError { get; set; }
     }
 }
-

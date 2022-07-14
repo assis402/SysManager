@@ -8,7 +8,6 @@ namespace SysManager.Application.Validators.Unity
 {
     public class UnityPostRequestValidator : AbstractValidator<UnityPostRequest>
     {
-
         public UnityPostRequestValidator(UnityRepository repository)
         {
             RuleFor(contract => contract.Name)

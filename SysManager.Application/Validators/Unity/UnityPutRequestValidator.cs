@@ -10,12 +10,12 @@ namespace SysManager.Application.Validators.Unity
     {
         public UnityPutRequestValidator(UnityRepository repository)
         {
+            RuleFor(contract => contract.Id)
+                .Must(id => !string.IsNullOrEmpty(id.ToString()))
+                .WithMessage(SysManagerErrors.Unity_Delete_BadRequest_Id_Is_Invalid_Or_Inexistent.Description());
+
             RuleFor(contract => contract.Name)
                 .Must(name => !string.IsNullOrEmpty(name))
-                .WithMessage(SysManagerErrors.Unity_Put_BadRequest_Name_Cannot_Be_Null_Or_Empty.Description());
-
-            RuleFor(contract => contract.Active)
-                .Must(active => active == true || active == false)
                 .WithMessage(SysManagerErrors.Unity_Put_BadRequest_Name_Cannot_Be_Null_Or_Empty.Description());
 
             RuleFor(contract => contract)

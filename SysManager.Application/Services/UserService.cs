@@ -30,10 +30,10 @@ namespace SysManager.Application.Services
                         Message = "Token successful",
                         Token = dataBytes
                     };
-                    
+
                     return Utils.SuccessData(response);
                 }
-                
+
                 return Utils.ErrorData(new AccountResponse { Message = "Token Fail" });
             }
             catch (Exception ex)
@@ -51,9 +51,9 @@ namespace SysManager.Application.Services
                 var validator = new UserPostRequestValidator(_userRepository);
                 var validationResult = validator.Validate(request);
 
-                if(!validationResult.IsValid)
+                if (!validationResult.IsValid)
                     return Utils.ErrorData(validationResult.Errors.ToErrorCodeList());
-                
+
                 var entity = new UserEntity(request);
 
                 return Utils.SuccessData(await _userRepository.CreateAsync(entity));
@@ -71,7 +71,7 @@ namespace SysManager.Application.Services
                 var validator = new UserPutRequestValidator(_userRepository);
                 var validationResult = validator.Validate(request);
 
-                if(!validationResult.IsValid)
+                if (!validationResult.IsValid)
                     return Utils.ErrorData(validationResult.Errors.ToErrorCodeList());
 
                 var user = await _userRepository.GetUserByUserNameAndEmailAsync(request.UserName, request.Email);

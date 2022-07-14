@@ -9,9 +9,11 @@ namespace SysManager.Application.Data.MySql.Repositories
 {
     public class UnityRepository : BaseRepository
     {
-        public UnityRepository(MySqlContext context) : base(context) { }
+        public UnityRepository(MySqlContext context) : base(context)
+        {
+        }
 
-        public async Task<ResponseDefault> CreateAsync(UnityEntity entity)
+        public virtual async Task<ResponseDefault> CreateAsync(UnityEntity entity)
         {
             var query = @"INSERT INTO unity(id, name, active) VALUES(@Id, @Name, @Active)";
 
@@ -28,7 +30,7 @@ namespace SysManager.Application.Data.MySql.Repositories
                           : new ResponseDefault("Erro ao tentar criar Unidade de Medida", true);
         }
 
-        public async Task<ResponseDefault> UpdateAsync(UnityEntity entity)
+        public virtual async Task<ResponseDefault> UpdateAsync(UnityEntity entity)
         {
             var query = $"UPDATE unity SET name = @Name, active = @Active WHERE id = @Id";
 
@@ -45,7 +47,7 @@ namespace SysManager.Application.Data.MySql.Repositories
                           : new ResponseDefault("Erro ao alterar Unidade de Medida", true);
         }
 
-        public async Task<ResponseDefault> DeleteByIdAsync(Guid id)
+        public virtual async Task<ResponseDefault> DeleteByIdAsync(Guid id)
         {
             var query = $"DELETE FROM unity WHERE id = '{id}'";
 
@@ -55,37 +57,44 @@ namespace SysManager.Application.Data.MySql.Repositories
                           : new ResponseDefault("Erro ao excluir Unidade de Medida", true);
         }
 
-        public async Task<UnityEntity> GetByIdAsync(Guid id)
+        public virtual async Task<UnityEntity> GetByIdAsync(Guid id)
         {
             var query = $"SELECT id, name, active FROM unity WHERE id = '{id}' AND active = true";
             return await QueryFirstOrDefaultAsync<UnityEntity>(query);
         }
 
-        public async Task<UnityEntity> GetByNameAsync(string name)
+        public virtual async Task<UnityEntity> GetByNameAsync(string name)
         {
             var query = $"SELECT id, name, active FROM unity WHERE name = '{name}' AND active = true LIMIT 1";
             return await QueryFirstOrDefaultAsync<UnityEntity>(query);
         }
 
-        public async Task<PaginationResponse<UnityEntity>> GetByFilterAsync(UnityGetByFilterRequest filter)
+        public virtual async Task<PaginationResponse<UnityEntity>> GetByFilterAsync(UnityGetByFilterRequest filter)
         {
-            var sql = new StringBuilder("SELECT id, name, active FROM unity WHERE 1=1");
-            var where = new StringBuilder();
+            var _sql = new StringBuilder("select id, name, active from unity where 1=1");
+            var _where = new StringBuilder();
 
             if (!string.IsNullOrEmpty(filter.Name))
-                where.Append($" AND name = '{filter.Name}'");
+                _where.Append($" AND name = '{filter.Name}'");
 
-            if (filter.Active != null)
-                where.Append($" AND active = '{filter.Active}'");
+            if (filter.Active != "todos")
+            {
+                string _booleanField = "";
+                if (filter.Active == "ativos")
+                    _booleanField = " AND active = true";
+                else if (filter.Active == "inativos")
+                    _booleanField = " AND active = false";
 
-            sql.Append(where);
-            
-            if (filter.Page > 0 && filter.PageSize > 0)
-                sql.Append($" LIMIT {filter.PageSize * filter.Page - 1}, {filter.PageSize}");
+                _where.Append(_booleanField);
+            }
+            _sql.Append(_where);
 
-            var result = await QueryAsync<UnityEntity>(sql.ToString());
+            if (filter.page > 0 && filter.pageSize > 0)
+                _sql.Append($" limit {filter.pageSize * (filter.page - 1)}, {filter.pageSize}");
 
-            return new PaginationResponse<UnityEntity>(filter.PageSize, filter.Page, result);
+            var result = await QueryAsync<UnityEntity>(_sql.ToString());
+
+            return new PaginationResponse<UnityEntity>(filter.pageSize, filter.page, result);
         }
     }
 }

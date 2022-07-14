@@ -1,22 +1,23 @@
-﻿using System;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SysManager.Application.Data.MySql.Entities;
 using SysManager.Application.Services;
+using System;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace SysManager.Application.Helpers
 {
-	public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+    public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         private readonly UserService _userService;
+
         public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, UserService userService) : base(options, logger, encoder, clock) => this._userService = userService;
 
@@ -25,7 +26,7 @@ namespace SysManager.Application.Helpers
             if (data.Length < 14)
                 return true;
 
-            var year = data.Substring(0,4);
+            var year = data.Substring(0, 4);
             var month = data.Substring(4, 2);
             var day = data.Substring(6, 2);
 
@@ -51,7 +52,7 @@ namespace SysManager.Application.Helpers
                 return AuthenticateResult.Fail("Missing Authorization Header");
 
             var user = new UserEntity();
-            
+
             try
             {
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
@@ -61,12 +62,10 @@ namespace SysManager.Application.Helpers
                 var username = credentials[0];
                 var password = credentials[1];
 
-
                 var authTokenBytes = Request.Headers["token"];
                 var credentialToken = Convert.FromBase64String(authTokenBytes);
                 var credentialsToken = Encoding.UTF8.GetString(credentialToken).Split(new[] { ':' }, 3);
 
-                
                 var tokenUserName = credentialsToken[0];
                 var tokenPassWord = credentialsToken[1];
                 var tokenExpired = credentialsToken[2];
@@ -80,7 +79,6 @@ namespace SysManager.Application.Helpers
                     return AuthenticateResult.Fail("Invalid Username or Password");
 
                 user = await _userService.Authenticate(username, password);
-
             }
             catch
             {
@@ -101,7 +99,5 @@ namespace SysManager.Application.Helpers
 
             return AuthenticateResult.Success(ticket);
         }
-
     }
 }
-

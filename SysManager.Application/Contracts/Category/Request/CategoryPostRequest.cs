@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SysManager.Application.Contracts.Category.Request
+﻿namespace SysManager.Application.Contracts.Category.Request
 {
     public class CategoryPostRequest
     {

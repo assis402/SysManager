@@ -1,16 +1,16 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SysManager.Application.Contracts.ProductType.Request;
 using SysManager.Application.Helpers;
 using SysManager.Application.Services;
+using System;
+using System.Threading.Tasks;
 
 namespace SysManager.Admin.Controllers
 {
     [Authorize]
     [ApiVersion("1.0")]
-	[Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ProductTypeController
     {
         private readonly ProductTypeService _productTypeService;

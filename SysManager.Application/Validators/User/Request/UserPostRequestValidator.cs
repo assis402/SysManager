@@ -1,13 +1,12 @@
 using FluentValidation;
 using SysManager.Application.Contracts.Users.Request;
-using SysManager.Application.Data.MySql.Entities;
 using SysManager.Application.Data.MySql.Repositories;
 using SysManager.Application.Errors;
 using SysManager.Application.Helpers;
 
 namespace SysManager.Application.Validators.User.Request
 {
-    public class UserPostRequestValidator: AbstractValidator<UserPostRequest>
+    public class UserPostRequestValidator : AbstractValidator<UserPostRequest>
     {
         public UserPostRequestValidator(UserRepository repository)
         {
@@ -24,7 +23,8 @@ namespace SysManager.Application.Validators.User.Request
                 .WithMessage(SysManagerErrors.User_Post_BadRequest_Password_Cannot_Be_Null_Or_Empty.Description());
 
             RuleFor(x => x.Email)
-                .Must(email => {
+                .Must(email =>
+                {
                     var result = repository.GetUserByEmailAsync(email).Result;
                     return result == null;
                 })

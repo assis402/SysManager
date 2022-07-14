@@ -1,14 +1,10 @@
 using SysManager.Application.Contracts.Unity.Request;
-using SysManager.Application.Contracts.Users.Request;
 using SysManager.Application.Data.MySql.Entities;
 using SysManager.Application.Data.MySql.Repositories;
 using SysManager.Application.Errors;
 using SysManager.Application.Helpers;
 using SysManager.Application.Validators.Unity;
-using SysManager.Application.Validators.User.Request;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SysManager.Application.Services
@@ -43,9 +39,9 @@ namespace SysManager.Application.Services
             return Utils.SuccessData(await _unityRepository.UpdateAsync(entity));
         }
 
-        public async Task<ResultData> GetByFilterAsync(UnityGetByFilterRequest unity)
+        public async Task<ResultData> GetByFilterAsync(UnityGetByFilterRequest request)
         {
-            var response = await _unityRepository.GetByFilterAsync(unity);
+            var response = await _unityRepository.GetByFilterAsync(request);
             return Utils.SuccessData(response);
         }
 

@@ -1,10 +1,8 @@
-using System;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using SysManager.Application.Data.MySql;
 using SysManager.Application.Data.MySql.Repositories;
 using SysManager.Application.Helpers;
@@ -36,7 +34,7 @@ namespace SysManager.Admin
             {
                 options.JsonSerializerOptions.IgnoreNullValues = true;
             });
-            
+
             services.AddScoped<UserService>();
             services.AddScoped<CategoryService>();
             services.AddScoped<ProductService>();
@@ -48,7 +46,7 @@ namespace SysManager.Admin
             services.AddScoped<ProductRepository>();
             services.AddScoped<ProductTypeRepository>();
             services.AddScoped<UnityRepository>();
-            
+
             services.AddScoped<MySqlContext>();
             services.Configure<AppConnectionSettings>(option => Configuration.GetSection("ConnectionStrings").Bind(option));
         }

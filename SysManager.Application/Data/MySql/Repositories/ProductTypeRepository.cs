@@ -9,13 +9,14 @@ namespace SysManager.Application.Data.MySql.Repositories
 {
     public class ProductTypeRepository : BaseRepository
     {
-        public ProductTypeRepository(MySqlContext context) : base(context) { }
+        public ProductTypeRepository(MySqlContext context) : base(context)
+        {
+        }
 
         public async Task<ResponseDefault> CreateAsync(ProductTypeEntity entity)
         {
-            var query = @"INSERT INTO category(id, name, active) " + 
+            var query = @"INSERT INTO category(id, name, active) " +
                         @"VALUES(@Id, @Name, @Active)";
-
 
             //var param = new
             //{
@@ -90,7 +91,7 @@ namespace SysManager.Application.Data.MySql.Repositories
                 where.Append($" AND active = '{filter.Active}'");
 
             sql.Append(where);
-            
+
             if (filter.Page > 0 && filter.PageSize > 0)
                 sql.Append($" LIMIT {filter.PageSize * filter.Page - 1}, {filter.PageSize}");
 

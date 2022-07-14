@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SysManager.Application.Contracts.Product.Request
+﻿namespace SysManager.Application.Contracts.Product.Request
 {
     public class ProductPostRequest
     {

@@ -8,6 +8,10 @@ namespace SysManager.Application.Data.MySql
         private MySqlConnection connection;
         private readonly string connectionString = "";
 
+        public MySqlContext()
+        {
+        }
+
         public MySqlContext(IOptions<AppConnectionSettings> appSettings)
         {
             connectionString = appSettings.Value.DefaultConnection;

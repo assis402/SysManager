@@ -3,18 +3,22 @@ using System.Linq;
 
 namespace SysManager.Application.Contracts
 {
-    public class PaginationResponse<T> where T: class
+    public class PaginationResponse<T> where T : class
     {
-        public int PageSize { get; set; }
-        public int Page { get; set; }
-        public int Total { get; set; }
+        public int _pageSize { get; set; }
+        public int _page { get; set; }
+        public int _total { get; set; }
         public IEnumerable<T> Items { get; set; }
+
+        public PaginationResponse()
+        {
+        }
 
         public PaginationResponse(int pageSize, int page, IEnumerable<T> items)
         {
-            PageSize = pageSize;
-            Page = page;
-            Total = items.Count();
+            _pageSize = pageSize;
+            _page = page;
+            _total = items.Count();
             Items = items;
         }
     }

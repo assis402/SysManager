@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace SysManager.Admin
 {
-    class Program
+    internal class Program
     {
         public static void Main(string[] args)
         {
@@ -17,4 +16,3 @@ namespace SysManager.Admin
         }
     }
 }
-

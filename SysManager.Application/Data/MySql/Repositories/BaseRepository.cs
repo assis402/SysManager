@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SysManager.Application.Data.MySql.Repositories
 {
-    abstract public class BaseRepository
+    public abstract class BaseRepository
     {
         private readonly MySqlContext _context;
 

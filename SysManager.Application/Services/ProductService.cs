@@ -1,5 +1,4 @@
 using SysManager.Application.Contracts.Product.Request;
-using SysManager.Application.Contracts.Users.Request;
 using SysManager.Application.Data.MySql.Entities;
 using SysManager.Application.Data.MySql.Repositories;
 using SysManager.Application.Errors;

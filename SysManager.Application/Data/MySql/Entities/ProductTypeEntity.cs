@@ -1,7 +1,7 @@
+using SysManager.Application.Contracts.ProductType.Request;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SysManager.Application.Contracts.ProductType.Request;
 
 namespace SysManager.Application.Data.MySql.Entities
 {

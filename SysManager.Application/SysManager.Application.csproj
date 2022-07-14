@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Contracts\Product\Response\**" />
+    <EmbeddedResource Remove="Contracts\Product\Response\**" />
+    <None Remove="Contracts\Product\Response\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Contracts\" />
     <None Remove="Contracts\Users\" />
     <None Remove="Contracts\Products\" />
@@ -25,7 +31,6 @@
   <ItemGroup>
     <Folder Include="Contracts\User\" />
     <Folder Include="Contracts\Product\" />
-    <Folder Include="Contracts\Product\Response\" />
     <Folder Include="Errors\" />
     <Folder Include="Services\" />
     <Folder Include="Helpers\" />
@@ -36,5 +41,6 @@
     <PackageReference Include="FluentValidation" Version="11.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="MySql.Data" Version="8.0.25" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 </Project>

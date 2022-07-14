@@ -5,6 +5,7 @@ namespace SysManager.Application.Errors
     public enum SysManagerErrors
     {
         #region User
+
         [Description("É ncessário informar a propriedade UserName")]
         User_Post_BadRequest_UserName_Cannot_Be_Null_Or_Empty,
 
@@ -13,7 +14,7 @@ namespace SysManager.Application.Errors
 
         [Description("É ncessário informar a propriedade Password")]
         User_Post_BadRequest_Password_Cannot_Be_Null_Or_Empty,
-        
+
         [Description("Já existe um usuário com esse e-mail")]
         User_Post_BadRequest_Email_Cannot_Be_Duplicated,
 
@@ -22,9 +23,11 @@ namespace SysManager.Application.Errors
 
         [Description("É ncessário informar a propriedade NewPassword")]
         User_Put_BadRequest_NewPassword_Cannot_Be_Null_Or_Empty,
-        #endregion  User
-        
+
+        #endregion User
+
         #region Unity
+
         [Description("É necessário informar o nome da unidade de medida")]
         Unity_Post_BadRequest_Name_Cannot_Be_Null_Or_Empty,
 
@@ -51,9 +54,11 @@ namespace SysManager.Application.Errors
 
         [Description("Unidade de medida inválida ou inexistente")]
         Unity_Delete_BadRequest_Id_Is_Invalid_Or_Inexistent,
+
         #endregion Unity
 
         #region Category
+
         [Description("É necessário informar o nome da categoria")]
         Category_Post_BadRequest_Name_Cannot_Be_Null_Or_Empty,
 
@@ -80,9 +85,11 @@ namespace SysManager.Application.Errors
 
         [Description("Categoria inválida ou inexistente")]
         Category_Delete_BadRequest_Id_Is_Invalid_Or_Inexistent,
+
         #endregion Category
 
         #region Product
+
         [Description("É necessário informar o nome do produto")]
         Product_Post_BadRequest_Name_Cannot_Be_Null_Or_Empty,
 
@@ -109,9 +116,11 @@ namespace SysManager.Application.Errors
 
         [Description("Produto inválido ou inexistente")]
         Product_Delete_BadRequest_Id_Is_Invalid_Or_Inexistent,
+
         #endregion Product
 
         #region ProductType
+
         [Description("É necessário informar o nome do tipo de produto")]
         ProductType_Post_BadRequest_Name_Cannot_Be_Null_Or_Empty,
 
@@ -138,6 +147,7 @@ namespace SysManager.Application.Errors
 
         [Description("Tipo de produto inválido ou inexistente")]
         ProductType_Delete_BadRequest_Id_Is_Invalid_Or_Inexistent,
+
         #endregion ProductType
     }
 }

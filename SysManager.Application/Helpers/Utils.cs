@@ -1,35 +1,29 @@
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using FluentValidation.Results;
-using Microsoft.AspNetCore.Mvc;
 
 namespace SysManager.Application.Helpers
 {
     public static class Utils
     {
-        public static ResultData<T> SuccessData<T>(T data)
+        public static ResultData SuccessData(object data)
         {
-            return new ResultData<T>(data)
-            {
-                Success = true
-            };
+            return new ResultData(true, data);
         }
 
-        public static ResultData<T> ErrorData<T>(T data)
+        public static ResultData ErrorData(object data)
         {
-            return new ResultData<T>(data)
-            {
-                Success = false
-            };
+            return new ResultData(false, data);
         }
 
-        public static IActionResult Convert(this ResultData resultData) 
+        public static IActionResult Convert(this ResultData resultData)
         {
             if (resultData.Success)
                 return new OkObjectResult(resultData);
-
             else return new BadRequestObjectResult(resultData);
         }
 
@@ -56,5 +50,10 @@ namespace SysManager.Application.Helpers
         public static string GetDateExpired(int value) => DateTime.Now.AddMinutes(value).ToString("yyyyMMddHHmmss");
 
         public static string ToBase64Encode(this string data) => System.Convert.ToBase64String(Encoding.UTF8.GetBytes(data));
+
+        public static string ToJson(this object obj)
+        {
+            return JsonConvert.SerializeObject(obj, Formatting.Indented);
+        }
     }
 }

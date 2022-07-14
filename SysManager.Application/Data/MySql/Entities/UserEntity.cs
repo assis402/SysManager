@@ -1,9 +1,7 @@
 using SysManager.Application.Contracts.Users.Request;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace SysManager.Application.Data.MySql.Entities
 {
@@ -23,7 +21,7 @@ namespace SysManager.Application.Data.MySql.Entities
             this.Active = false;
         }
 
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("id")]
         public Guid Id { get; set; }
 

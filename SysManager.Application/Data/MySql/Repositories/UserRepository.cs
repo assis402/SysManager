@@ -1,4 +1,3 @@
-using Dapper;
 using SysManager.Application.Contracts;
 using SysManager.Application.Data.MySql.Entities;
 using System;
@@ -8,7 +7,9 @@ namespace SysManager.Application.Data.MySql.Repositories
 {
     public class UserRepository : BaseRepository
     {
-        public UserRepository(MySqlContext context) : base(context) {}
+        public UserRepository(MySqlContext context) : base(context)
+        {
+        }
 
         public async Task<ResponseDefault> CreateAsync(UserEntity entity)
         {

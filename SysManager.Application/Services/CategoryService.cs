@@ -5,8 +5,6 @@ using SysManager.Application.Errors;
 using SysManager.Application.Helpers;
 using SysManager.Application.Validators.Category;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SysManager.Application.Services
