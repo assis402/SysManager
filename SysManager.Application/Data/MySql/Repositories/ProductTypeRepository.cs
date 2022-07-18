@@ -18,20 +18,6 @@ namespace SysManager.Application.Data.MySql.Repositories
             var query = @"INSERT INTO category(id, name, active) " +
                         @"VALUES(@Id, @Name, @Active)";
 
-            //var param = new
-            //{
-            //    entity.Id,
-            //    entity.ProductCode,
-            //    entity.Name,
-            //    entity.Active,
-            //    entity.ProductTypeId,
-            //    entity.ProductProductTypeId,
-            //    entity.ProductUnityId,
-            //    entity.CostPrice,
-            //    entity.Price,
-            //    entity.Percentage
-            //};
-
             var result = await ExecuteAsync(query, entity);
 
             return result ? new ResponseDefault("Tipo de Produto criado com sucesso", false, entity.Id.ToString())
@@ -43,13 +29,6 @@ namespace SysManager.Application.Data.MySql.Repositories
             var query = $"UPDATE category " +
                         $"SET name = @Name, active = @Active " +
                         $"WHERE id = @Id";
-
-            //var param = new
-            //{
-            //    entity.Id,
-            //    entity.Name,
-            //    entity.Active
-            //};
 
             var result = await ExecuteAsync(query, entity);
 

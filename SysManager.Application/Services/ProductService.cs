@@ -11,13 +11,25 @@ namespace SysManager.Application.Services
 {
     public class ProductService
     {
-        private readonly ProductRepository _productRepository;
+		private readonly ProductRepository _productRepository;
+        private readonly ProductTypeRepository _productTypeRepository;
+        private readonly CategoryRepository _categoryRepository;
+        private readonly UnityRepository _unityRepository;
 
-        public ProductService(ProductRepository repository) => this._productRepository = repository;
+        public ProductService(ProductRepository productRepository, 
+                              ProductTypeRepository productTypeRepository,
+                              CategoryRepository categoryRepository, 
+                              UnityRepository unityRepository)
+        {
+            _productRepository = productRepository;
+            _productTypeRepository = productTypeRepository;
+            _categoryRepository = categoryRepository;
+            _unityRepository = unityRepository;
+        }
 
         public async Task<ResultData> PostAsync(ProductPostRequest product)
         {
-            var validator = new ProductPostRequestValidator(_productRepository);
+            var validator = new ProductPostRequestValidator(_productRepository, _productTypeRepository, _categoryRepository, _unityRepository);
             var validationResult = validator.Validate(product);
 
             if (!validationResult.IsValid)
@@ -29,7 +41,7 @@ namespace SysManager.Application.Services
 
         public async Task<ResultData> PutAsync(ProductPutRequest product)
         {
-            var validator = new ProductPutRequestValidator(_productRepository);
+            var validator = new ProductPutRequestValidator(_productRepository, _productTypeRepository, _categoryRepository, _unityRepository);
             var validationResult = validator.Validate(product);
 
             if (!validationResult.IsValid)

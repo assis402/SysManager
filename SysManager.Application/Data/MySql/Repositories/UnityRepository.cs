@@ -17,14 +17,7 @@ namespace SysManager.Application.Data.MySql.Repositories
         {
             var query = @"INSERT INTO unity(id, name, active) VALUES(@Id, @Name, @Active)";
 
-            var param = new
-            {
-                entity.Id,
-                entity.Name,
-                entity.Active
-            };
-
-            var result = await ExecuteAsync(query, param);
+            var result = await ExecuteAsync(query, entity);
 
             return result ? new ResponseDefault("Unidade de Medida criada com sucesso", false, entity.Id.ToString())
                           : new ResponseDefault("Erro ao tentar criar Unidade de Medida", true);
@@ -34,14 +27,7 @@ namespace SysManager.Application.Data.MySql.Repositories
         {
             var query = $"UPDATE unity SET name = @Name, active = @Active WHERE id = @Id";
 
-            var param = new
-            {
-                entity.Id,
-                entity.Name,
-                entity.Active
-            };
-
-            var result = await ExecuteAsync(query, param);
+            var result = await ExecuteAsync(query, entity);
 
             return result ? new ResponseDefault("Unidade de Medida alterada com sucesso", false, entity.Id.ToString())
                           : new ResponseDefault("Erro ao alterar Unidade de Medida", true);

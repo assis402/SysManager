@@ -1,70 +1,79 @@
-using SysManager.Application.Contracts.Product.Request;
+﻿using SysManager.Application.Contracts.Product.Request;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
 namespace SysManager.Application.Data.MySql.Entities
 {
     [Table("product")]
     public class ProductEntity
     {
-        public ProductEntity(ProductPostRequest request)
+
+        public ProductEntity(ProductPostRequest product)
         {
             Id = Guid.NewGuid();
-            ProductCode = request.ProductCode;
-            Name = request.Name;
-            Active = request.Active;
-            ProductUnityId = request.ProductUnityId;
-            ProductCategoryId = request.ProductCategoryId;
-            ProductTypeId = request.ProductTypeId;
-            Price = request.Price;
-            CostPrice = request.CostPrice;
-            Percentage = request.Percentage;
+            Name = product.Name;
+            ProductCode = product.ProductCode;
+            ProductTypeId = product.ProductTypeId;
+            CategoryId = product.CategoryId;
+            UnityId = product.UnityId;
+            CostPrice = product.CostPrice;
+            Percentage = product.Percentage;
+            Price = product.Price;
+            Active = product.Active;
         }
 
-        public ProductEntity(ProductPutRequest request)
+        public ProductEntity(ProductPutRequest product)
         {
-            Id = request.Id;
-            Name = request.Name;
-            Active = request.Active;
-            Price = request.Price;
-            CostPrice = request.CostPrice;
-            Percentage = request.Percentage;
+            Id = product.Id;
+            Name = product.Name;
+            ProductCode = product.ProductCode;
+            ProductTypeId = product.ProductTypeId;
+            CategoryId = product.CategoryId;
+            UnityId = product.UnityId;
+            CostPrice = product.CostPrice;
+            Percentage = product.Percentage;
+            Price = product.Price;
+            Active = product.Active;
         }
 
         public ProductEntity()
         {
         }
 
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+
+        [Key,DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("id")]
         public Guid Id { get; set; }
-
-        [Column("productCode")]
-        public string ProductCode { get; set; }
 
         [Column("name")]
         public string Name { get; set; }
 
-        [Column("active")]
-        public bool Active { get; set; }
+        [Column("productCode")]
+        public string ProductCode { get; set; }
 
         [Column("productTypeId")]
         public string ProductTypeId { get; set; }
+        
+        [Column("categoryId")]
+        public string CategoryId { get; set; }
 
-        [Column("productCategoryId")]
-        public string ProductCategoryId { get; set; }
+        [Column("unityId")]
+        public string UnityId { get; set; }
 
-        [Column("productUnityId")]
-        public string ProductUnityId { get; set; }
-
-        [Column("costPrice")]
+        [Column("coastPrice")]
         public decimal CostPrice { get; set; }
+
+        [Column("percentage")]
+        public decimal Percentage { get; set; }
 
         [Column("price")]
         public decimal Price { get; set; }
 
-        [Column("percentage")]
-        public decimal Percentage { get; set; }
+        [Column("active")]
+        public bool Active { get; set; }
+
     }
 }

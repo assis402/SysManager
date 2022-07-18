@@ -16,15 +16,6 @@ namespace SysManager.Application.Data.MySql.Repositories
             var query = $@"INSERT INTO user (id, username, email, password, active)
                            VALUES(@Id, @Username, @Email, @Password, @Active)";
 
-            //var param = new
-            //{
-            //    id = entity.Id,
-            //    username = entity.UserName,
-            //    email = entity.Email,
-            //    password = entity.Password,
-            //    active = entity.Active
-            //};
-
             var result = await ExecuteAsync(query, entity);
 
             return result ? new ResponseDefault("Usuário criado com sucesso", false, entity.Id.ToString())
