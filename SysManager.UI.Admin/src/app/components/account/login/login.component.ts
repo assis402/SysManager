@@ -1,13 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AccountService } from "../../../services/account-service"
+import { AccountLoginView } from "../models/account-login-view";
 import { AccountView } from "../models/account-view";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html'
+  selector: 'app-login',
+  templateUrl: './login.component.html'
 })
-export class RegisterComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
   returnUrl: string = '';
 
@@ -21,43 +22,34 @@ export class RegisterComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/'
   }
 
-  createAccount(){
+  login(){
     this.hideMessage();
-    let iUserName = (<HTMLInputElement>document.getElementById('username')).value;
     let iEmail = (<HTMLInputElement>document.getElementById('email')).value;
     let iPassword = (<HTMLInputElement>document.getElementById('password')).value;
-    let iPasswordConfirm = (<HTMLInputElement>document.getElementById('passwordConfirm')).value;
 
-    if (iUserName == '' || iUserName == undefined){
-      this.showMessage("Informe um usuário...");
+    if (iEmail == '' || iEmail == undefined){
+      this.showMessage("Informe um email");
       return;
-   }
-
-   if (iEmail == '' || iEmail == undefined){
-      this.showMessage("Informe um email...");
-      return;
-   }
+    }
 
    if (iPassword == '' || iPassword == undefined){
-      this.showMessage("Informe uma senha...");
+      this.showMessage("Informe sua senha");
       return;
-   }
+    }
 
-   if (iPassword != iPasswordConfirm){
-      this.showMessage("Verifique se as senhas conferem...");
-      return;
-   }
+    const account = new AccountLoginView(iEmail, iPassword);
 
-    const account = new AccountView(iUserName, iEmail, iPassword);
-
-    this.accountService.createAccount(account).subscribe((response: any) => {
+    this.showLoading();
+    this.accountService.login(account).subscribe((response: any) => {
       console.log('sucesso');
       console.log(`${JSON.stringify(response)}`);
-      this.router.navigateByUrl('/login');
+      this.hideLoading();
+      this.router.navigateByUrl('/');
     }, error => {
       console.log(`${JSON.stringify(error)}`);
       console.log('erro');
-      this.showMessage("Erro ao se comunicar com o servidor.");
+      this.hideLoading();
+      this.showMessage("Erro ao se comunicar com o servidor");
     })
   }
 
@@ -74,4 +66,14 @@ export class RegisterComponent implements OnInit {
        idvAlert.innerHTML = '';
        colErrors.style.display='none';
    }
+
+   showLoading(){
+    const loading = document.getElementById('loading')!;
+    loading.style.display='';
+   }
+
+  hideLoading(){
+       const loading = document.getElementById('loading')!;
+       loading.style.display='none';
+  }
 }

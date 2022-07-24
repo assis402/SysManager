@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './components/account/login/login.component';
+import { RecoveryComponent } from './components/account/recovery/recovery.component';
 import { RegisterComponent } from './components/account/register/register.component';
 import { DefaultLayoutComponent } from './containers';
 
@@ -17,7 +19,7 @@ const routes: Routes = [
     },
     children: [
       {
-        path: '',
+        path: 'account',
         loadChildren: () =>
         import('./components/account/account.module').then((m) => m.AccountModule)
       }
@@ -28,6 +30,20 @@ const routes: Routes = [
     component: RegisterComponent,
     data: {
       title: 'Register'
+    }
+  },
+  {
+  path: 'login',
+  component: LoginComponent,
+  data: {
+    title: 'Login'
+    }
+  },
+  {
+    path: 'recovery',
+    component: RecoveryComponent,
+    data: {
+      title: 'Recovery'
     }
   }
 

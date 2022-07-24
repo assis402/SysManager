@@ -1,13 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AccountService } from "../../../services/account-service"
+import { AccountPutRequest } from "../models/account-put-request";
 import { AccountView } from "../models/account-view";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html'
+  selector: 'app-recovery',
+  templateUrl: './recovery.component.html'
 })
-export class RegisterComponent implements OnInit {
+export class RecoveryComponent implements OnInit {
 
   returnUrl: string = '';
 
@@ -21,43 +22,43 @@ export class RegisterComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/'
   }
 
-  createAccount(){
+  recovery(){
     this.hideMessage();
     let iUserName = (<HTMLInputElement>document.getElementById('username')).value;
     let iEmail = (<HTMLInputElement>document.getElementById('email')).value;
-    let iPassword = (<HTMLInputElement>document.getElementById('password')).value;
-    let iPasswordConfirm = (<HTMLInputElement>document.getElementById('passwordConfirm')).value;
+    let iNewPassword = (<HTMLInputElement>document.getElementById('password')).value;
+    let iNewPasswordConfirm = (<HTMLInputElement>document.getElementById('passwordConfirm')).value;
 
     if (iUserName == '' || iUserName == undefined){
-      this.showMessage("Informe um usuário...");
+      this.showMessage("Informe um usuário");
       return;
-   }
+    }
 
-   if (iEmail == '' || iEmail == undefined){
-      this.showMessage("Informe um email...");
+    if (iEmail == '' || iEmail == undefined){
+      this.showMessage("Informe um email");
       return;
-   }
+    }
 
-   if (iPassword == '' || iPassword == undefined){
-      this.showMessage("Informe uma senha...");
+    if (iNewPassword == '' || iNewPassword == undefined){
+      this.showMessage("Informe sua senha");
       return;
-   }
+    }
 
-   if (iPassword != iPasswordConfirm){
+    if (iNewPassword != iNewPasswordConfirm){
       this.showMessage("Verifique se as senhas conferem...");
       return;
-   }
+    }
 
-    const account = new AccountView(iUserName, iEmail, iPassword);
+    const account = new AccountPutRequest(iUserName, iEmail, iNewPassword);
 
-    this.accountService.createAccount(account).subscribe((response: any) => {
+    this.accountService.recoveryAccount(account).subscribe((response: any) => {
       console.log('sucesso');
       console.log(`${JSON.stringify(response)}`);
       this.router.navigateByUrl('/login');
     }, error => {
       console.log(`${JSON.stringify(error)}`);
       console.log('erro');
-      this.showMessage("Erro ao se comunicar com o servidor.");
+      this.showMessage("Erro ao se comunicar com o servidor");
     })
   }
 

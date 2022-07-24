@@ -48,6 +48,7 @@ import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { AccountService } from './services/account-service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -64,7 +65,7 @@ const APP_CONTAINERS = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),    
+    ToastrModule.forRoot(),
     AppRoutingModule,
     AvatarModule,
     BreadcrumbModule,
@@ -94,6 +95,7 @@ const APP_CONTAINERS = [
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    AccountService,
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy,
