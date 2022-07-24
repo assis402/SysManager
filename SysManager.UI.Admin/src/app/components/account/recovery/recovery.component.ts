@@ -51,13 +51,16 @@ export class RecoveryComponent implements OnInit {
 
     const account = new AccountPutRequest(iUserName, iEmail, iNewPassword);
 
+    this.showLoading();
     this.accountService.recoveryAccount(account).subscribe((response: any) => {
       console.log('sucesso');
       console.log(`${JSON.stringify(response)}`);
+      this.hideLoading();
       this.router.navigateByUrl('/login');
     }, error => {
       console.log(`${JSON.stringify(error)}`);
       console.log('erro');
+      this.hideLoading();
       this.showMessage("Erro ao se comunicar com o servidor");
     })
   }
@@ -75,4 +78,14 @@ export class RecoveryComponent implements OnInit {
        idvAlert.innerHTML = '';
        colErrors.style.display='none';
    }
+
+   showLoading(){
+    const loading = document.getElementById('loading')!;
+    loading.style.display='';
+   }
+
+  hideLoading(){
+       const loading = document.getElementById('loading')!;
+       loading.style.display='none';
+  }
 }

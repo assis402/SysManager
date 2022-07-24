@@ -50,13 +50,16 @@ export class RegisterComponent implements OnInit {
 
     const account = new AccountView(iUserName, iEmail, iPassword);
 
+    this.showLoading();
     this.accountService.createAccount(account).subscribe((response: any) => {
       console.log('sucesso');
       console.log(`${JSON.stringify(response)}`);
+      this.hideLoading();
       this.router.navigateByUrl('/login');
     }, error => {
       console.log(`${JSON.stringify(error)}`);
       console.log('erro');
+      this.hideLoading();
       this.showMessage("Erro ao se comunicar com o servidor.");
     })
   }
@@ -74,4 +77,14 @@ export class RegisterComponent implements OnInit {
        idvAlert.innerHTML = '';
        colErrors.style.display='none';
    }
+
+   showLoading(){
+    const loading = document.getElementById('loading')!;
+    loading.style.display='';
+   }
+
+  hideLoading(){
+       const loading = document.getElementById('loading')!;
+       loading.style.display='none';
+  }
 }
