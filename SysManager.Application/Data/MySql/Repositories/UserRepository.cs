@@ -34,13 +34,13 @@ namespace SysManager.Application.Data.MySql.Repositories
 
         public async Task<UserEntity> GetUserByEmailAsync(string email)
         {
-            var query = $"SELECT id, username, email, password, active FROM USER WHERE email = '{email}' AND active = true LIMIT 1";
+            var query = $"SELECT id, username, email, password, active FROM user WHERE email = '{email}' LIMIT 1";
             return await QueryFirstOrDefaultAsync<UserEntity>(query);
         }
 
         public async Task<UserEntity> GetUserByUserNameAndEmailAsync(string userName, string email)
         {
-            var query = $"SELECT id, username, email, password, active FROM user WHERE username = '{userName}' AND email = '{email}' AND active = true LIMIT 1";
+            var query = $"SELECT id, username, email, password, active FROM user WHERE username = '{userName}' AND email = '{email}' LIMIT 1";
             return await QueryFirstOrDefaultAsync<UserEntity>(query);
         }
 

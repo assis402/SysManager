@@ -13,6 +13,7 @@ namespace SysManager.Admin
     public class Startup
     {
         public IConfiguration Configuration { get; set; }
+        readonly string CorsPolicy = "_corsPolicy";
 
         public Startup()
         {
@@ -27,6 +28,17 @@ namespace SysManager.Admin
             Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
             services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: CorsPolicy,
+                                  builder =>
+                                  {
+                                      builder.AllowAnyOrigin()
+                                       .AllowAnyMethod()
+                                       .AllowAnyHeader();
+                                  });
+            });
 
             BeforeConfigureServices(services);
             services.AddApiVersioning();
@@ -54,6 +66,7 @@ namespace SysManager.Admin
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseHttpsRedirection();
+            app.UseCors(CorsPolicy);
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseMvc();
