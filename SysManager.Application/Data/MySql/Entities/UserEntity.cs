@@ -14,11 +14,11 @@ namespace SysManager.Application.Data.MySql.Entities
 
         public UserEntity(UserPostRequest user)
         {
-            this.Id = Guid.NewGuid();
-            this.UserName = user.UserName;
-            this.Email = user.Email;
-            this.Password = user.Password;
-            this.Active = false;
+            Id = Guid.NewGuid();
+            UserName = user.UserName;
+            Email = user.Email;
+            Password = user.Password;
+            Active = true;
         }
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
