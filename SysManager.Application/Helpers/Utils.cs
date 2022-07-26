@@ -1,6 +1,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using SysManager.Application.Contracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,13 @@ namespace SysManager.Application.Helpers
 {
     public static class Utils
     {
+        public static ResultData SuccessData(ResponseDefault data)
+        {
+            bool error = data.HasError == false;
+            var result = new ResultData(error, data);
+            return result;
+        }
+
         public static ResultData SuccessData(object data)
         {
             return new ResultData(true, data);
@@ -17,6 +25,17 @@ namespace SysManager.Application.Helpers
 
         public static ResultData ErrorData(object data)
         {
+            if (data.GetType() == typeof(string))
+            {
+                var error = new ErrorResponse((string)data);
+                return new ResultData(false, error);
+            }
+            else if (data.GetType() == typeof(List<string>))
+            {
+                var error = new ErrorResponse((List<string>)data);
+                return new ResultData(false, error);
+            }
+
             return new ResultData(false, data);
         }
 

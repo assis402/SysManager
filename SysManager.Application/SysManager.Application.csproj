@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -34,7 +34,6 @@
     <Folder Include="Contracts\Product\" />
     <Folder Include="Errors\" />
     <Folder Include="Services\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Validators\" />
   </ItemGroup>
   <ItemGroup>
