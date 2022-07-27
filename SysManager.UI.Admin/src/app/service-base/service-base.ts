@@ -160,33 +160,16 @@ export abstract class ServiceBase<TResultResponse> {
            errorMessage = response.error ? response.error.Message : "Erro interno no servidor!"
 
         if (response.status == "400") {
-
-            console.log('response... ');
-            console.log(JSON.stringify(response));
-
             if(response.error.data.errors != undefined){
-                var listMessage =[];
-                listMessage.push(response.error.data.errors);
-
-                if (listMessage[0].length >1)
-                {
                    response.error.data.errors.forEach(function (item: { message: string; }) {
-                   //errorMessage += '-' + item + '</br>';
                    errorMessage += item + '</br>';
-                   listMessage.push(item);
                    });
-                }
-                else
-                {
-                    errorMessage = response.error.data.errors[0];
-                }
             }
             else {
                 errorMessage = 'Erro interno no servidor!';
             }
-
-            //errorMessage = 'Erro interno de Mensagem!';
         }
+
         return throwError(errorMessage);
     }
 

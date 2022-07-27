@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AccountService } from "../../../services/account-service"
 import { AccountLoginView } from "../models/account-login-view";
-import { AccountView } from "../models/account-view";
+import { AccountToken } from "../models/account-token";
 
 @Component({
   selector: 'app-login',
@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.hideMessage();
+    localStorage.removeItem('currentUser');
     let iEmail = (<HTMLInputElement>document.getElementById('email')).value;
     let iPassword = (<HTMLInputElement>document.getElementById('password')).value;
 
@@ -41,13 +42,13 @@ export class LoginComponent implements OnInit {
 
     this.showLoading();
     this.accountService.login(account).subscribe((response: any) => {
-      console.log('sucesso');
-      console.log(`${JSON.stringify(response)}`);
+      
+      const userToken = new AccountToken(account.email, account.password, response.token);
+      localStorage.setItem('currentUser', JSON.stringify(response));
+      
       this.hideLoading();
       this.router.navigateByUrl('/');
     }, error => {
-      console.log(`${JSON.stringify(error)}`);
-      console.log('erro');
       this.hideLoading();
       this.showMessage("Erro ao se comunicar com o servidor");
     })
