@@ -3,12 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/account/login/login.component';
 import { RecoveryComponent } from './components/account/recovery/recovery.component';
 import { RegisterComponent } from './components/account/register/register.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DefaultLayoutComponent } from './containers';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -44,6 +45,13 @@ const routes: Routes = [
     component: RecoveryComponent,
     data: {
       title: 'Recovery'
+    }
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    data: {
+      title: 'Dashboard'
     }
   }
 
