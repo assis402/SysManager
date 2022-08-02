@@ -20,20 +20,20 @@ const routes: Routes = [
     },
     children: [
       {
-        path: 'account',
-        loadChildren: () =>
+        path:'account',
+        loadChildren: ()=>
         import('./components/account/account.module').then((m) => m.AccountModule)
       },
       {
-        path: 'dashboard',
-        loadChildren: () =>
+        path:'dashboard',
+        loadChildren: ()=>
         import('./components/dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
       {
-        path: 'unity',
-        loadChildren: () =>
+        path:'unity',
+        loadChildren: ()=>
         import('./components/unity/unity.module').then((m) => m.UnityModule)
-      },
+      }
     ]
   },
   {

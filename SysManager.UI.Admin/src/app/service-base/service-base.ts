@@ -32,7 +32,7 @@ export abstract class ServiceBase<TResultResponse> {
 
     insert(post: object): Observable<string> {
         this.headers = this.getHeaderToken();
-        return this.http.post(`${this.servicesConfig.endpoint}/insert`,
+        return this.http.post(`${this.servicesConfig.endpoint}`,
         JSON.stringify(post), {
             headers: this.headers,
             observe: 'response'
@@ -44,7 +44,7 @@ export abstract class ServiceBase<TResultResponse> {
 
     update(put: object): Observable<string> {
         this.headers = this.getHeaderToken();
-        return this.http.put(`${this.servicesConfig.endpoint}/update`,
+        return this.http.put(`${this.servicesConfig.endpoint}`,
         JSON.stringify(put), {
             headers: this.headers,
             observe: 'response'

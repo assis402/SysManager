@@ -38,16 +38,16 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    const account = new AccountLoginView(iEmail, iPassword);
+    const user = new AccountLoginView(iEmail, iPassword);
 
     this.showLoading();
-    this.accountService.login(account).subscribe((response: any) => {
-      
-      const userToken = new AccountToken(account.email, account.password, response.token);
-      localStorage.setItem('currentUser', JSON.stringify(response));
-      
+    this.accountService.login(user).subscribe((response: any) => {
+
+      const userToken = new AccountToken(user.email, user.password, response.token);
+            localStorage.setItem('currentUser',JSON.stringify(userToken));
+
       this.hideLoading();
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/dashboard');
     }, error => {
       this.hideLoading();
       this.showMessage("Erro ao se comunicar com o servidor");

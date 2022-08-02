@@ -1,11 +1,11 @@
-import { UnityView } from "./unity-view";
+import {UnityView} from './unity-view';
 
-export class UnityPost {
-  name: string;
-  active: string;
+export class UnityPost{
+    name: string;
+    active: boolean;
 
-  constructor(obj: UnityView) {
-    this.name = obj.name;
-    this.active = obj.active;
-  }
+    constructor(obj: UnityView) {
+      this.name = obj.name;
+      this.active = obj.active;
+    }
 }

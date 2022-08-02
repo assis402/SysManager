@@ -1,13 +1,14 @@
-export class UnityFilter {
-  name: string;
-  active: string;
-  page: number;
-  pageSize: number;
+export class UnityFilter{
+    name: string;
+    active: string;
+    page: number;
+    pageSize: number;
 
-  constructor(name: string, active: string, page: number, pageSize: number){
-    this.name = name,
-    this.active = active,
-    this.page = page,
-    this.pageSize = pageSize
-  }
+    constructor(_name:string, _activbe:string, _page:number, _pageSize:number)
+    {
+        this.name = _name;
+        this.active = _activbe;
+        this.page = _page;
+        this.pageSize = _pageSize;
+    }
 }

@@ -1,41 +1,97 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { NgxSpinnerService } from "ngx-spinner";
+import { ToastrService } from "ngx-toastr";
+import { PagerService } from "src/app/services/page-service";
+import { UnityService } from "src/app/services/unity-service";
+import {UnityFilter} from './models/unity-filter';
 
 @Component({
-  selector: 'app-unity',
-  templateUrl: './unity.component.html'
+    selector:'app-unity',
+    templateUrl:'./unity.component.html'
 })
+
 export class UnityComponent implements OnInit {
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-  ) {}
+    @Input() bodyDetailTodelete = '';
+    public openCloseModal =false;
 
-  ngOnInit(){
-  }
+    public modalVisible = false;
+    public pager: any={};
+    public idToDelete = '';
+    pageSize = 10;
+    firstPage = 1;
+    pagedItems: any[]=[];
 
-  showMessage(value:string){
-    const colErrors = document.getElementById('colerror')!;
-    var idvAlert = (<HTMLDivElement>document.getElementById('dvAlert'));
-    idvAlert.innerHTML = value;
-    colErrors.style.display='';
-   }
+    constructor(
+                private route: ActivatedRoute,
+                private router: Router,
+                private formBuilder: FormBuilder,
+                private unityService:UnityService,
+                private spinner: NgxSpinnerService,
+                private pagerService: PagerService,
+                private toastr: ToastrService
 
-  hideMessage(){
-       const colErrors = document.getElementById('colerror')!;
-       var idvAlert = (<HTMLDivElement>document.getElementById('dvAlert'));
-       idvAlert.innerHTML = '';
-       colErrors.style.display='none';
-   }
+               ){}
 
-   showLoading(){
-    const loading = document.getElementById('loading')!;
-    loading.style.display='';
-   }
+    formFilter = new FormGroup({
+                                 name: this.formBuilder.control(''),
+                                 active: this.formBuilder.control('todos'),
+                                 pageSize: this.formBuilder.control('10')
+                                });
 
-  hideLoading(){
-       const loading = document.getElementById('loading')!;
-       loading.style.display='none';
-  }
+    ngOnInit(){
+    }
+
+
+    confirmdelete(){
+        if(this.idToDelete != undefined && this.idToDelete != '')
+        {
+            this.spinner.show();
+            this.unityService.delete(this.idToDelete).subscribe((response: any) => {
+                this.toastr.success(response.message,'Unidade de medida');
+                this.filterView(this.formFilter.value,1);
+                this.spinner.hide();
+                },error => {
+                    this.spinner.hide();
+                    this.toastr.error(error,'Unidade de medida');
+                });
+        }
+        this.idToDelete = '';
+        this.modalVisible = false;
+    }
+    
+    canceldelete(){
+      this.modalVisible = false;
+    }
+
+    handleChangeModal(event:any){
+    }
+
+    prepareDelete(id:string, name:string){
+        this.idToDelete = id;
+        this.bodyDetailTodelete = 'Deseja realmente Excluir o registro ('+name+')';
+        this.modalVisible = !this.modalVisible;
+    }
+
+    redirectUpdate(url:string, id:string){
+        this.router.navigate([url,id])
+    }
+
+    redirectTo(url:string){
+    this.router.navigateByUrl(url);
+    }
+
+    filterView(filter:UnityFilter, page:number){
+        this.spinner.show();
+        let _filter = new UnityFilter(filter.name, filter.active, page, filter.pageSize);
+        this.unityService.getByFilter(_filter).subscribe(view => {
+        this.pagedItems = view.items;
+        this.pager = this.pagerService.getPager(view._total,page, view._pageSize);
+        this.spinner.hide();
+        },error => {
+            this.spinner.hide();
+        });
+    }
 }
